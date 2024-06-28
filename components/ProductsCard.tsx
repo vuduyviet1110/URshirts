@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { FaHeartCirclePlus, FaEye } from "react-icons/fa6";
+import {  FaEye } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import { ProductType } from "@/types/ProductTypes";
 import AddToCart from "@/app/(shoppingcart)/components/ui/AddToCart";

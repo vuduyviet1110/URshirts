@@ -8,13 +8,11 @@ import ToastContext from "@/context/HotToastContext";
 import CartContext from "@/context/CartContext";
 import Footer from "@/components/Footer";
 import Providers from "@/components/Providers";
+import { constructMetadata } from "@/lib/utils";
 
 const raleway = Raleway({ subsets: ["latin"], weight:['100', '200', '300', '400', '500', '600', '700', '800', '900'] });
 
-export const metadata: Metadata = {
-  title: "Urshirts",
-  description: "E-commerce website for Urshirts",
-};
+export const metadata: Metadata = constructMetadata();
 
 export default async function RootLayout({
   children,

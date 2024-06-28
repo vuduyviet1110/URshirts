@@ -64,12 +64,12 @@ enum OrderStatus {
 model Order {
   id                String           @id @default(cuid()) @map("_id")
   userId            String
-  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User             @relation(fields: [userId], references: [id])
   amount            Float
   currency          String
   status            OrderStatus
-  configuration     Configuration    @relation(fields: [configurationId], references: [id])
-  configurationId   String
+  configuration     Configuration?   @relation(fields: [configurationId], references: [id])
+  configurationId   String?
   createdDate       DateTime         @default(now())
   paymentIntentId   String?          @unique
   isPaid            Boolean          @default(false)

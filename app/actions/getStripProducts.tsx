@@ -10,6 +10,8 @@ export const FetchProducts = async () => {
     );
     const products = await stripe.products.list({
       limit: 99,
+      active: true,
+      
     });
 
     const priceMap = new Map();

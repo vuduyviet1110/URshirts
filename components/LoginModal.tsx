@@ -24,7 +24,7 @@ const LoginModal = ({
           <div className='relative mx-auto w-24 h-24 mb-2'>
             <h2 >URshirt</h2>
             <Image
-              src='/wave.png'
+              src='/logoUrshirts.jpg'
               alt='URshirt image'
               className='object-contain'
               fill

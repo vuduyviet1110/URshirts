@@ -37,6 +37,7 @@ const Checkout = ({
             items: items,
             payment_intent_id: checkoutStore.paymentIntent,
             totalAmount: totalPrice,
+            
           }),
         });
         if (response.status === 403) {

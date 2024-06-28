@@ -74,7 +74,7 @@ const CheckoutForm = ({
             },
             body: JSON.stringify({
               orderId: orderId,
-              status: "payment successful",
+              isPaid: true,
             }),
           });
         }

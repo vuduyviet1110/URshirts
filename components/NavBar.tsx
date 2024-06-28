@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 import { mainLinks } from "@/contants";
 import { userLinks } from "@/contants";
 import { User } from "@prisma/client";
-import wave from '../public/wave.png'
+import logo from '../public/logoUrshirts.jpg'
 //icons
 import {
   AiOutlineUser,
@@ -34,9 +34,8 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
     <nav>
       <div className="main-container border-b border-1 flex justify-between items-center py-2 relative">
         <Link href={"/"}>
-          <div className="relative flex gap-1 items-center text-xl font-medium text-black">
-            <h1 className="z-10">Urshirts</h1>
-            <Image className=' z-5 absolute top-[1.3px] left-[1.3px] w-15 rotate-3 h-10' src={wave} alt="logo" />
+          <div className="relative flex items-center text-xl font-medium text-black">
+            <Image className=' w-12 h-12' src={logo} alt="logo" />
           </div>
         </Link>
 

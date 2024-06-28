@@ -3,11 +3,16 @@ import getCurrentUser from "@/app/(auth)/actions/getCurrentUser";
 import prisma from "@/lib/prismadb";
 import Stripe from "stripe";
 import { CartEntry } from "use-shopping-cart/core";
+import { OrderStatus, Prisma } from "@prisma/client";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2024-04-10",
   typescript: true,
 });
+
+type OrderCreateInputCustom = Omit<Prisma.OrderCreateInput, 'configuration'> & {
+  configuration?: Prisma.ConfigurationCreateNestedOneWithoutOrderInput;
+};
 
 const manageStripePaymentIntent = async (payment_intent_id: string, total: number) => {
   if (payment_intent_id) {
@@ -33,21 +38,37 @@ const manageOrderInDB = async (paymentIntent: any, total: number, items: CartEnt
     });
   }
 
-  const createdOrder = await prisma.order.create({
-    data: {
-      userId,
-      amount: total,
-      currency: "usd",
-      status: "awaiting_shipment",
-      paymentIntentId: paymentIntent.id,
-      configurationId: items[0].configurationId || undefined,
+  const baseOrderData: OrderCreateInputCustom = {
+    amount: total,
+    currency: "usd",
+    status: OrderStatus.awaiting_shipment,
+    paymentIntentId: paymentIntent.id,
+    user: {
+      connect: { id: userId },
     },
+  };
+
+  // let orderData: OrderCreateInputCustom;
+
+  // if (configurationId) {
+  //   orderData = {
+  //     ...baseOrderData,
+  //     configuration: {
+  //       connect: { id: configurationId },
+  //     },
+  //   };
+  // } else {
+  //   orderData = baseOrderData;
+  // }
+
+  const createdOrder = await prisma.order.create({
+    data: baseOrderData as Prisma.OrderCreateInput,
   });
 
-  const orderItem = items.map(async (item) => {
+  const orderItems = items.map(async (item) => {
     await prisma.orderItem.create({
       data: {
-        orderId: createdOrder.id,
+        order: { connect: { id: createdOrder.id } },
         name: item.name,
         quantity: item.quantity,
         price: item.price,
@@ -57,7 +78,7 @@ const manageOrderInDB = async (paymentIntent: any, total: number, items: CartEnt
     });
   });
 
-  await Promise.all(orderItem);
+  await Promise.all(orderItems);
   return createdOrder;
 };
 

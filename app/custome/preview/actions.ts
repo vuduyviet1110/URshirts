@@ -51,6 +51,7 @@ export const createCheckoutSessions = async({configId,}:{configId:string}) => {
       currency: 'USD',
       unit_amount: price,
     },
+    metadata:{custome: 'true'}
   })
   const stripeSession = await stripe.checkout.sessions.create({
     success_url: `${process.env.NEXTAUTH_URL}/thank-you?orderId=${order.id}`,

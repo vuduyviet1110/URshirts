@@ -5,6 +5,7 @@ import { getPaymentStatus } from './actions'
 import { useSearchParams } from 'next/navigation'
 import formatPrice from '@/utils/formatPrice'
 import { BiLoader } from 'react-icons/bi'
+import Shirts from '@/components/Shirts'
 
 const ThankYou = () => {
   const searchParams = useSearchParams()
@@ -41,8 +42,9 @@ const ThankYou = () => {
     )
   }
 
-  const { configuration, BillingAddress, ShippingAddress, amount } = data
-  const { color } = configuration
+  const { configuration, BillingAddress, ShippingAddress, amount } = data;
+    const { color, croppedImageUrl, type } = configuration ?? {};
+
 
   return (
     <div className='bg-white'>
@@ -77,10 +79,7 @@ const ThankYou = () => {
         </div>
 
         <div className='flex space-x-6 overflow-hidden mt-4 rounded-xl bg-gray-900/5 ring-1 ring-inset ring-gray-900/10 lg:rounded-2xl'>
-          {/* <PhonePreview
-            croppedImageUrl={configuration.croppedImageUrl!}
-            color={color!}
-          /> */}
+          <Shirts color={color || undefined} imgSrc={croppedImageUrl ?? ''} Stype={type || undefined} />
         </div>
 
         <div>
