@@ -43,6 +43,7 @@ const manageOrderInDB = async (paymentIntent: any, total: number, items: CartEnt
     currency: "usd",
     status: OrderStatus.awaiting_shipment,
     paymentIntentId: paymentIntent.id,
+    configuration: items[0]?.configuration || undefined,
     user: {
       connect: { id: userId },
     },
