@@ -3,7 +3,7 @@ import CustomeInfo from "@/components/CustomeInfo";
 import Hero from "@/components/Hero";
 import Info from "@/components/Info";
 import NewProducts from "@/components/NewProducts";
-import TopRated from "@/components/TopRated";
+import TopProducts from "@/components/TopRated";
 
 export default function Home() {
   return (
@@ -11,8 +11,8 @@ export default function Home() {
     <>
       <Hero />
       <Info />
-      <TopRated />
-      <NewProducts />
+      <TopProducts />
+      <NewProducts/>
       <CustomeInfo/>
       <Banner />
     </>

@@ -5,6 +5,7 @@ import MaxWidthWrapper from '@/components/MaxWidth';
 import { useInView } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Shirts from '@/components/Shirts';
+import ShirtsReivew from './ShirtReview';
 
 const SHIRTS = [
   '/testimonials/1.jpg',
@@ -80,30 +81,21 @@ interface ReviewProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 function Review({ imgSrc, className, ...props }: ReviewProps) {
-  const POSSIBLE_ANIMATION_DELAYS = [
-    '0s',
-    '0.1s',
-    '0.2s',
-    '0.3s',
-    '0.4s',
-    '0.5s',
-  ];
+  const POSSIBLE_ANIMATION_DELAYS = ['0s', '0.1s', '0.2s', '0.3s', '0.4s', '0.5s'];
 
   const animationDelay =
-    POSSIBLE_ANIMATION_DELAYS[
-      Math.floor(Math.random() * POSSIBLE_ANIMATION_DELAYS.length)
-    ];
+    POSSIBLE_ANIMATION_DELAYS[Math.floor(Math.random() * POSSIBLE_ANIMATION_DELAYS.length)];
 
   return (
     <div
       className={cn(
         'animate-fade-in rounded-[2.25rem] bg-white p-6 opacity-0 shadow-xl shadow-slate-900/5',
-        className
+        className,
       )}
       style={{ animationDelay }}
       {...props}
     >
-      <Shirts color='black' Stype='polo' imgSrc={imgSrc} />
+      <ShirtsReivew color="black" Stype="TShirt" imgSrc={imgSrc} />
     </div>
   );
 }
@@ -126,7 +118,7 @@ function ReviewGrid() {
         <>
           <ReviewColumn
             reviews={[...column1, ...column3.flat(), ...column2]}
-            reviewClassName={(reviewIndex) =>
+            reviewClassName={reviewIndex =>
               cn({
                 'md:hidden': reviewIndex >= column1.length + column3[0].length,
                 'lg:hidden': reviewIndex >= column1.length,
@@ -137,16 +129,10 @@ function ReviewGrid() {
           <ReviewColumn
             reviews={[...column2, ...column3[1]]}
             className="hidden md:block"
-            reviewClassName={(reviewIndex) =>
-              reviewIndex >= column2.length ? 'lg:hidden' : ''
-            }
+            reviewClassName={reviewIndex => (reviewIndex >= column2.length ? 'lg:hidden' : '')}
             msPerPixel={15}
           />
-          <ReviewColumn
-            reviews={column3.flat()}
-            className="hidden md:block"
-            msPerPixel={10}
-          />
+          <ReviewColumn reviews={column3.flat()} className="hidden md:block" msPerPixel={10} />
         </>
       ) : null}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-100" />

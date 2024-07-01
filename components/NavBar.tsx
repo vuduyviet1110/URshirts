@@ -1,27 +1,24 @@
-"use client";
-import { useState } from "react";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
-import { mainLinks } from "@/contants";
-import { userLinks } from "@/contants";
-import { User } from "@prisma/client";
-import logo from '../public/logoUrshirts.jpg'
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
+import { mainLinks } from '@/contants';
+import { userLinks } from '@/contants';
+import { User } from '@prisma/client';
+import logo from '../public/logoUrshirts.jpg';
 //icons
-import {
-  AiOutlineUser,
-} from "react-icons/ai";
-import { FiMenu } from "react-icons/fi";
-import { MdClose } from "react-icons/md";
-import Image from "next/image";
-import CartIcon from "@/app/(shoppingcart)/components/ui/CartIcon";
-import WishlistIcon from "@/app/(wishlist)/components/WishlistIcon";
+import { AiOutlineUser } from 'react-icons/ai';
+import { FiMenu } from 'react-icons/fi';
+import { MdClose } from 'react-icons/md';
+import Image from 'next/image';
+import CartIcon from '@/app/(shoppingcart)/components/ui/CartIcon';
+import WishlistIcon from '@/app/(wishlist)/components/WishlistIcon';
 interface NavbarProps {
   user: User;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ user }) => {
-  const [openMobileMenu, setOpenMobileMenu] =
-    useState(false);
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const mobileMenuHandler = () => {
     setOpenMobileMenu(!openMobileMenu);
@@ -33,42 +30,43 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
   return (
     <nav>
       <div className="main-container border-b border-1 flex justify-between items-center py-2 relative">
-        <Link href={"/"}>
+        <Link href={'/'}>
           <div className="relative flex items-center text-xl font-medium text-black">
-            <Image className=' w-12 h-12' src={logo} alt="logo" />
+            <Image className=" w-12 h-12" src={logo} alt="logo" />
           </div>
         </Link>
 
-        <ul className="flex gap-10 max-md:hidden">
+        <ul className="flex gap-10 max-md:hidden relative">
           {mainLinks.map((link, index) => (
-            <Link className='transition ease-in-out delay-100 px-1 text-slate-950 hover:-translate-y-1 hover:scale-110 py-1 rounded-lg hover:decoration-zinc-400 duration-200' key={index} href={link.route}>
+            <Link
+              className="transition ease-in-out delay-100 px-1 text-slate-950 hover:-translate-y-1 hover:scale-110 py-1 rounded-lg hover:decoration-zinc-400 duration-200"
+              key={index}
+              href={link.route}
+            >
               <li className="font-semibold">{link.label}</li>
+              {link.special && (
+                <li className="absolute -top-2 -right-5 h-full w-6 font-semibold  text-slate-200">
+                  <span className="bg-blue-900 px-1">New</span>
+                </li>
+              )}
             </Link>
           ))}
         </ul>
 
         <div className="flex gap-5 text-xl [&>*]:cursor-pointer">
           <div className="transition ease-in-out delay-100 px-1 text-slate-950 hover:-translate-y-1 hover:scale-110 py-1 rounded-lg hover:decoration-zinc-400 duration-200">
-          <CartIcon />
+            <CartIcon />
           </div>
           <div className="transition ease-in-out delay-100 px-1 text-slate-950 hover:-translate-y-1 hover:scale-110 py-1 rounded-lg hover:decoration-zinc-400 duration-200">
-          <WishlistIcon />
+            <WishlistIcon />
           </div>
-          <div
-            className="max-md:hidden flex items-center justify-center"
-            >
-            {user && <div className="text-sm mr-2">Welcome, {user?.email?.split('@')[0]}</div>}
-            {" "}
-            <div
-              onClick={userMenuHandler}
-            >
+          <div className="max-md:hidden flex items-center justify-center">
+            {user && <div className="text-sm mr-2">Welcome, {user?.email?.split('@')[0]}</div>}{' '}
+            <div onClick={userMenuHandler}>
               <AiOutlineUser />
             </div>
           </div>
-          <div
-            className="md:hidden"
-            onClick={mobileMenuHandler}
-          >
+          <div className="md:hidden" onClick={mobileMenuHandler}>
             {openMobileMenu ? <MdClose /> : <FiMenu />}
           </div>
         </div>
@@ -78,28 +76,20 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
           <div className="z-10 absolute right-0 top-[40px] w-18 bg-gray-700 shadow-md rounded-md p-4 text-white max-md:hidden text-center">
             {!user ? (
               <ul>
-                <Link
-                  onClick={() => setOpenUserMenu(false)}
-                  href={"/sign-in"}
-                >
+                <Link onClick={() => setOpenUserMenu(false)} href={'/sign-in'}>
                   <li>Log In</li>
                 </Link>
-                <Link
-                  onClick={() => setOpenUserMenu(false)}
-                  href={"/sign-up"}
-                >
+                <Link onClick={() => setOpenUserMenu(false)} href={'/sign-up'}>
                   <li>Sign Up</li>
                 </Link>
               </ul>
             ) : (
               <ul>
                 {userLinks.map((link, index) => (
-                  <Link
-                    onClick={() => setOpenUserMenu(false)}
-                    key={index}
-                    href={link.route}
-                  >
-                    <li className="transition ease-in-out delay-100 px-1 text-slate-100 hover:-translate-y-1 hover:scale-110 py-1 rounded-lg hover:decoration-zinc-400 duration-200">{link.label}</li>
+                  <Link onClick={() => setOpenUserMenu(false)} key={index} href={link.route}>
+                    <li className="transition ease-in-out delay-100 px-1 text-slate-100 hover:-translate-y-1 hover:scale-110 py-1 rounded-lg hover:decoration-zinc-400 duration-200">
+                      {link.label}
+                    </li>
                   </Link>
                 ))}
                 <li
@@ -126,10 +116,10 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
               ))}
               {!user ? (
                 <>
-                  <Link href={"/sign-in"}>
+                  <Link href={'/sign-in'}>
                     <li>Log In</li>
                   </Link>
-                  <Link href={"/sign-up"}>
+                  <Link href={'/sign-up'}>
                     <li>Sign Up</li>
                   </Link>
                 </>
@@ -140,10 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
                       <li>{link.label}</li>
                     </Link>
                   ))}
-                  <li
-                    className="cursor-pointer"
-                    onClick={() => signOut()}
-                  >
+                  <li className="cursor-pointer" onClick={() => signOut()}>
                     Sign Out
                   </li>
                 </>

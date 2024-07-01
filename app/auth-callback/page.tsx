@@ -35,7 +35,7 @@ const Page = () => {
   }
 
   return (
-    <div className='w-full mt-24 flex justify-center'>
+    <div className='w-full min-h-screen mt-24 flex justify-center'>
       <div className='flex flex-col items-center gap-2'>
         <BiLoader className='h-8 w-8 animate-spin text-zinc-500' />
         <h3 className='font-semibold text-xl'>Logging you in...</h3>

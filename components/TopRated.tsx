@@ -14,17 +14,21 @@ const TopProducts = async () => {
           <h1 className="text-xl uppercase border-b border-gray-900 text-gray-900">
             Top Products
           </h1>
-          <Link href={"/shop"} className="hover:underline">
+          <Link href="/shop" className="hover:underline">
             <span>View More &#8594;</span>
           </Link>
         </div>
         <div className="grid lg:grid-cols-4 gap-5 grid-cols-2">
-          {topProducts.map((product) => (
-            <ProductsCard
-              key={product.id}
-              product={product}
-            />
-          ))}
+          {topProducts.map((product) => {
+            console.log(product)
+            return (
+              <ProductsCard
+                key={product.id}
+                productId={product.id}
+                product={product}
+              />
+            )
+          })}
         </div>
       </div>
     </section>

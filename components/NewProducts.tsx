@@ -23,6 +23,7 @@ const NewProducts = async () => {
             <ProductsCard
               key={product.id}
               product={product}
+              productId={product.id}
             />
           ))}
         </div>

@@ -1,7 +1,8 @@
-"use client";
-import { useShoppingCart } from "use-shopping-cart";
-import { Product } from "use-shopping-cart/core";
-import toast from "react-hot-toast";
+'use client';
+import { useShoppingCart } from 'use-shopping-cart';
+import { Product } from 'use-shopping-cart/core';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const AddToCart = ({
   currency,
@@ -12,11 +13,14 @@ const AddToCart = ({
   size,
   sizeSelect,
   onClick,
+  redirect = false,
 }: Product & {
   onClick?: () => void;
+  redirect?: boolean;
 }) => {
   const { addItem } = useShoppingCart();
   const productId = `${id}-${size}`;
+  const router = useRouter();
   const product = {
     currency: currency,
     name: name,
@@ -34,6 +38,9 @@ const AddToCart = ({
         } else {
           addItem(product as any);
           toast.success(`${name} has been added to cart`);
+          if (redirect) {
+            router.push('/cart');
+          }
         }
       }}
     >

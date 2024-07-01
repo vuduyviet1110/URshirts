@@ -26,7 +26,7 @@ const manageStripePaymentIntent = async (payment_intent_id: string, total: numbe
   });
 };
 
-const manageOrderInDB = async (paymentIntent: any, total: number, items: CartEntry[], userId: string) => {
+const manageOrderInDB = async (paymentIntent: any, total: number, items: CartEntry[], userId: string, configurationId?: string) => {
   const existingOrder = await prisma.order.findUnique({
     where: { paymentIntentId: paymentIntent.id },
   });
@@ -43,27 +43,26 @@ const manageOrderInDB = async (paymentIntent: any, total: number, items: CartEnt
     currency: "usd",
     status: OrderStatus.awaiting_shipment,
     paymentIntentId: paymentIntent.id,
-    configuration: items[0]?.configuration || undefined,
     user: {
       connect: { id: userId },
     },
   };
 
-  // let orderData: OrderCreateInputCustom;
+  let orderData: OrderCreateInputCustom;
 
-  // if (configurationId) {
-  //   orderData = {
-  //     ...baseOrderData,
-  //     configuration: {
-  //       connect: { id: configurationId },
-  //     },
-  //   };
-  // } else {
-  //   orderData = baseOrderData;
-  // }
+  if (configurationId) {
+    orderData = {
+      ...baseOrderData,
+      configuration: {
+        connect: { id: configurationId },
+      },
+    };
+  } else {
+    orderData = baseOrderData;
+  }
 
   const createdOrder = await prisma.order.create({
-    data: baseOrderData as Prisma.OrderCreateInput,
+    data: orderData as Prisma.OrderCreateInput,
   });
 
   const orderItems = items.map(async (item) => {

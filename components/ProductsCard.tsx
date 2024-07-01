@@ -1,35 +1,35 @@
-"use client";
-import { useState } from "react";
-import Image from "next/image";
-import {  FaEye } from "react-icons/fa6";
-import toast from "react-hot-toast";
-import { ProductType } from "@/types/ProductTypes";
-import AddToCart from "@/app/(shoppingcart)/components/ui/AddToCart";
-import formatPrice from "@/utils/formatPrice";
-import AddToWishlistButton from "@/app/(wishlist)/components/AddToWishlistButton";
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
+import { FaEye } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
+import { ProductType } from '@/types/ProductTypes';
+import AddToCart from '@/app/(shoppingcart)/components/ui/AddToCart';
+import formatPrice from '@/utils/formatPrice';
+import AddToWishlistButton from '@/app/(wishlist)/components/AddToWishlistButton';
+import Link from 'next/link';
 
-const ProductsCard = ({
-  product,
-}: {
-  product: ProductType;
-}) => {
-  const [selectedSize, setSelectedSize] = useState("");
+const ProductsCard = ({ product, productId }: { product: ProductType; productId?: string }) => {
+  const [selectedSize, setSelectedSize] = useState('');
 
-  const isSizeSelected = selectedSize !== "";
+  const isSizeSelected = selectedSize !== '';
 
   const showToast = () => {
-    toast.error("Please choose a size first");
+    toast.error('Please choose a size first');
   };
   return (
     <div className=" relative flex flex-col items-center">
       <div className="relative group">
-        <Image
-          src={product.image}
-          width={300}
-          height={300}
-          alt={`image of ${product.name}`}
-          className="cursor-pointer"
-        />
+        <Link href={`/products/${productId}`}>
+          <Image
+            src={product.image}
+            width={300}
+            height={300}
+            alt={`image of ${product.name}`}
+            className="cursor-pointer"
+          />
+        </Link>
+
         <div className="hidden absolute top-5 items-center justify-center group-hover:flex flex-col gap-3">
           <button className="mx-2 bg-gray-900 border text-white p-2 rounded-md hover:bg-gray-900/75">
             <AddToWishlistButton
@@ -40,18 +40,13 @@ const ProductsCard = ({
               quantity={product.quantity}
             />
           </button>
-          <button className="mx-2 bg-gray-900 border text-white p-2 rounded-md hover:bg-gray-900/75">
-            <FaEye />
-          </button>
         </div>
       </div>
-      <h3 className="font-bold tracking-wide">
-        {product.name}
-      </h3>
+      <h3 className="font-bold tracking-wide">{product.name}</h3>
       <span>{formatPrice(product.unit_amount)}</span>
       <select
         value={selectedSize}
-        onChange={(e) => setSelectedSize(e.target.value)}
+        onChange={e => setSelectedSize(e.target.value)}
         className="my-2 p-2 border rounded-md"
       >
         <option value="">Select Size</option>
