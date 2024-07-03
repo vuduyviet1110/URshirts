@@ -13,6 +13,7 @@ import { MdClose } from 'react-icons/md';
 import Image from 'next/image';
 import CartIcon from '@/app/(shoppingcart)/components/ui/CartIcon';
 import WishlistIcon from '@/app/(wishlist)/components/WishlistIcon';
+import Search from './Search';
 interface NavbarProps {
   user: User;
 }
@@ -20,6 +21,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ user }) => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const mobileMenuHandler = () => {
     setOpenMobileMenu(!openMobileMenu);
   };
@@ -35,6 +37,8 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
             <Image className=" w-12 h-12" src={logo} alt="logo" />
           </div>
         </Link>
+
+        <Search />
 
         <ul className="flex gap-10 max-md:hidden relative">
           {mainLinks.map((link, index) => (
@@ -52,7 +56,6 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
             </Link>
           ))}
         </ul>
-
         <div className="flex gap-5 text-xl [&>*]:cursor-pointer">
           <div className="transition ease-in-out delay-100 px-1 text-slate-950 hover:-translate-y-1 hover:scale-110 py-1 rounded-lg hover:decoration-zinc-400 duration-200">
             <CartIcon />
